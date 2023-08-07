@@ -5,7 +5,9 @@ Pong is a game played by two players who each control a paddle placed at opposit
 <img src="img/pong.gif">
 
 **Table of Contents**
+
 - [Learning Objectives](#learning-objectives)
+- [Installation](#installation)
 - [Planning](#planning)
 - [Grade Rubric and Schedule](#grade-rubric-and-schedule)
 - [Helpful Code and Advice](#helpful-code-and-advice)
@@ -25,10 +27,23 @@ Pong is a game played by two players who each control a paddle placed at opposit
 - [Submit Your Work](#submit-your-work)
 
 # Learning Objectives
+
 - Practice modeling data with Objects
 - Reuse code from previous projects to create something new
 - Practice abstraction
 - Apply the algorithm for detecting collisions between objects
+
+# Installation
+
+Pong is not installed by default with the other projects. As such, you will need to install it yourself. To do so, go to your workspace and open up a terminal. Within the terminal, enter the following commands:
+
+- cd asd-projects
+- git clone https://github.com/operationspark/asd-pong pong
+- rm -rf pong/.git\*
+- git add pong
+- git commit -m "added pong"
+- git push
+- cd ..
 
 # Planning
 
@@ -37,23 +52,27 @@ Always start any programming task by clarifying what you want to do and then bre
 With your partner, consider each of these questions and make sure you are aligned on your answers:
 
 ### User Story / Gameplay
+
 - Describe the gameplay
-- What are the conditions when the game begins? 
+- What are the conditions when the game begins?
 - Does the game have an end? If so, what are the conditions for when it ends?
 - What `if`s will there be?
 
 ### Visual Game Components:
+
 - What are the visual game components? For example, in Bouncing Box, the game components were the board and the box.
   - Which will be static? (the board)
   - Which will be animated? (the box)
 - What data will you need to manage each game component? For example, in Bouncing Box, the data values were `positionX`, `speedX`, and `points`.
 
-### Events / Logic 
+### Events / Logic
+
 - What events will occur in this game? (timer events, keyboard events, clicking events?)
 - How do those events affect the data of the program?
 - For each "event", write out the high-level logic of what will happen. It is better (and tricky) to be as specific as you can while remaining high-level!
 
 For example: in bouncing box, when the box is clicked:
+
 1. The speed is increased
 2. The point total goes up by 1 and is displayed on the box
 3. The position of the box is reset to 0
@@ -63,10 +82,10 @@ For example: in bouncing box, when the box is clicked:
 ## Best Practices (25 points)
 
 1. All code in proper sections (setup, core, helpers, etc.) - 5 points
-3. Use comments to describe setup and functions - 5 points
-4. Avoid magic numbers - 5 points
-5. Use helper functions to separate concerns - 5 points
-6. Generalize functions (i.e. only one collision detection function for all ball-paddle collisions; hard-coding to check both in a single function doesn't count) - 5 points
+2. Use comments to describe setup and functions - 5 points
+3. Avoid magic numbers - 5 points
+4. Use helper functions to separate concerns - 5 points
+5. Generalize functions (i.e. only one collision detection function for all ball-paddle collisions; hard-coding to check both in a single function doesn't count) - 5 points
 
 ## Program Content (75 points)
 
@@ -102,13 +121,14 @@ Open the `index.html` file. You should see this in the body:
 
 ```html
 <body>
-  <div id='board'>
-    <div id='gameItem'></div>
+  <div id="board">
+    <div id="gameItem"></div>
   </div>
 </body>
 ```
 
 Each project in this class will be build on some kind of `board` with various `gameItems` that are on the board. For this project, there are a number of required game items:
+
 - the left paddle
 - the ball
 - the right paddle
@@ -118,7 +138,7 @@ Each project in this class will be build on some kind of `board` with various `g
 Each one of these game items needs to be represented in HTML and, for the most part, `<div>`s can be used. To create a `<div>` with a particular `id` attribute, place the `id=""` attribute inside the opening tag:
 
 ```html
-<div id="uniqueGameItemName"> </div>
+<div id="uniqueGameItemName"></div>
 ```
 
 Not all of these game items will need objects. It is up to you to decide which ones do and which ones don't. You also may want more elements than just the ones mentioned, but those are the bare minimum required.
@@ -134,13 +154,15 @@ Open the `index.css` file.
 Adding CSS makes our gameItems actually become visible. For all projects in this course, we'll be using simple 2D shapes since they are relatively easy to render with basic HTML and CSS skills.
 
 The following properties will be useful for determining the appearance of our DOM elements:
+
 - `background-color`: the color of the element
 - `width`: the width of the element in pixels
 - `height`: the height of the element in pixels
 - `border-radius`: how rounded the edges of the element are. Leaving out this property will leave the element as a rectangle. Setting this value to half of `width` or `height` will make the shape a circle (assuming width and height are the same).
 
 The following properties will allow us to place our elements anywhere on the screen, relative to the `board`.
-- `position: absolute`: allows us to use the `top` and `left` properties to position HTML elements anywhere we want on the screen relative to the parent element. 
+
+- `position: absolute`: allows us to use the `top` and `left` properties to position HTML elements anywhere we want on the screen relative to the parent element.
 - `top`: the y-coordinate location of the element on a flipped y-axis (value increases as you move downwards).
 - `left`: the x-coordinate location of the element.
 
@@ -153,15 +175,16 @@ Overall, the CSS should look like this:
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  
+
   /* positioning */
   position: absolute;
   top: 100px;
   left: 100px;
 }
-``` 
+```
 
 Suggestions for this project:
+
 - Each paddle should have a unique `background-color`
 - Both paddles should have `width: 20px;` and `height: 80px;`
 - The ball should have `width:20px;`, `height:20px` and `border-radius: 10px;`
@@ -172,7 +195,7 @@ Suggestions for this project:
 
 <details> <summary> Using Factory Functions and Objects </summary>
 
-We will need to manage the data for each game item in this project: the ball and each paddle. 
+We will need to manage the data for each game item in this project: the ball and each paddle.
 
 Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so (shortening `positionX` and `positionY` to `x` and `y`:
 
@@ -193,12 +216,13 @@ For bouncing box, we would refactor the `moveBox()` function this:
 
 ```js
 function moveBox() {
-  box.x += box.speedX;              // update the position of the box along the x-axis
-  $(box.id).css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
+  box.x += box.speedX; // update the position of the box along the x-axis
+  $(box.id).css("left", box.x); // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
 Since you'll be creating objects to represent the ball and each paddle, use a factory function to ensure that each `gameItem` has the data below:
+
 - `gameItem.id`
 - `gameItem.x`
 - `gameItem.y`
@@ -271,24 +295,24 @@ There are two ways to approach this issue. You can either make a total of four e
 
 **Handler 2:** Should handle the "keyup" event for both paddles. As with the "keydown" handler, make sure your conditions check for the various keys you care about (up arrow, down arrow, 'W', and 'S'), and have the relevant paddle stop moving when one of its keys is released.
 
-Check out the [Walker project](https://github.com/benspector3/asd-template-keyboard-intro/) for ideas on how to move an object with your keyboard. Below is an example of simply printing  whenever the `ENTER` key is pressed down.
+Check out the [Walker project](https://github.com/benspector3/asd-template-keyboard-intro/) for ideas on how to move an object with your keyboard. Below is an example of simply printing whenever the `ENTER` key is pressed down.
 
 ```js
 var KEYCODE = {
   ENTER: 13,
-}
+};
 
 function handleKeyDown() {
   var keycode = event.which;
   console.log(keycode);
-  
+
   if (keycode === KEYCODE.ENTER) {
     console.log("enter pressed");
   }
 }
 ```
 
-Use https://keycode.info/ to find out the keycode for any key. 
+Use https://keycode.info/ to find out the keycode for any key.
 
 </details>
 
@@ -319,20 +343,20 @@ That equation will assign a value either between `-5` and `-2`, or a value betwe
 
 We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past. This time we want to move multiple objects, but since moving an object is basically the same every time, you should only make one function to handle that. Here's how to approach the problem.
 
-* **Step 1:** Create a function (call it `moveObject`), with a single parameter. That parameter will take the object you want to move as an argument.
-* **Step 2:** In the function, use the parameter and dot notation to change the current `x` and `y` values of the object based on the object's current speed.
-* **Step 3:** After updating `x` and `y`, use jQuery to update the `"left"` and `"top"` properties of the corresponding DOM element 
+- **Step 1:** Create a function (call it `moveObject`), with a single parameter. That parameter will take the object you want to move as an argument.
+- **Step 2:** In the function, use the parameter and dot notation to change the current `x` and `y` values of the object based on the object's current speed.
+- **Step 3:** After updating `x` and `y`, use jQuery to update the `"left"` and `"top"` properties of the corresponding DOM element
 
 Recall that you should use the jQuery `.css()` function to draw the element in the new position. For example, to change how far left or right an element is, you could write:
 
 ```js
-$("elementID").css("left", positionX)
+$("elementID").css("left", positionX);
 ```
 
 If we wanted to move the element vertically instead, you would do the same thing, but for the `"top"` property:
 
 ```js
-$("elementID").css("top", positionY)
+$("elementID").css("top", positionY);
 ```
 
 Of course, `"elementID"`, `positionX`, and `positionY` should all be obtained using the function's parameter and dot notation when writing your own function, which this example does not do.
@@ -344,13 +368,15 @@ Of course, `"elementID"`, `positionX`, and `positionY` should all be obtained us
 <details> <summary> Collisions with Walls </summary>
 
 In order to detect collisions with walls, you need to know three things.
+
 1. The position of the wall
 2. The position of your object
 3. The size of your object
 
-When you start your project, you will not know the positions of all walls. 
+When you start your project, you will not know the positions of all walls.
 
 To fix this, you should create two new `const` values under the "Constant Variables" section. These two new values should be
+
 1. `BOARD_WIDTH`
 2. `BOARD_HEIGHT`
 
@@ -365,11 +391,11 @@ Once you know those values, detecting a collision with a wall is easy. You have 
 3. If an object's `x + width` value goes past the right side of the box, then it collided with it.
 4. If an object's `y + height` value goes past the bottom side of the box, then it collided with it.
 
->**IMPORTANT:** You should make this collision detection be a single function (call it `wallCollision`) with a single parameter. The parameter should take in the object being checked as an argument (the `board` should *not* be an argument, however). This way, you only need to write the collision detection once, and you can use it not only for both paddles, but for the ball as well!
+> **IMPORTANT:** You should make this collision detection be a single function (call it `wallCollision`) with a single parameter. The parameter should take in the object being checked as an argument (the `board` should _not_ be an argument, however). This way, you only need to write the collision detection once, and you can use it not only for both paddles, but for the ball as well!
 
->**SUGGESTION:** The wall collisions can also be handled using the same min/max approach used in the Image Filtering project. Take a look at the `keepInBounds` function there. With some slight modifications, you can actually use that function for both your paddles and ball hitting the top and bottom walls. Give it a try if you'd like to challenge yourself and create more efficient code.
+> **SUGGESTION:** The wall collisions can also be handled using the same min/max approach used in the Image Filtering project. Take a look at the `keepInBounds` function there. With some slight modifications, you can actually use that function for both your paddles and ball hitting the top and bottom walls. Give it a try if you'd like to challenge yourself and create more efficient code.
 
->**NOTE:** You can use the `wallCollision` function for the ball as well as the paddles. However, this will only work for detecting collisions with the top and bottom of the board.
+> **NOTE:** You can use the `wallCollision` function for the ball as well as the paddles. However, this will only work for detecting collisions with the top and bottom of the board.
 
 </details>
 
@@ -418,45 +444,46 @@ You should have already created a `doCollide` function by this point. If you hav
 
 If you have not created the `doCollide` function, then below is a rough explanation on how to do so.
 
-><details> <summary> Click for Explanation </summary>
->Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is. 
+> <details> <summary> Click for Explanation </summary>
+> Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is.
 >
->If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
+> If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
 >
->For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
+> For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
 >
->```html
-><div id="gameItem"></div>
->```
+> ```html
+> <div id="gameItem"></div>
+> ```
 >
->```css
->#gameItem {
->  position: absolute;
->  left: 100px;  /* distance from the left side of the screen */
->  top: 50px;    /* distance from the top of the screen */
->}
->```
+> ```css
+> #gameItem {
+>   position: absolute;
+>   left: 100px; /* distance from the left side of the screen */
+>   top: 50px; /* distance from the top of the screen */
+> }
+> ```
 >
->```js
->var gameItem = {};
->gameItem.$element = $("#gameItem");
->gameItem.x = 100;   // same as "left"
->gameItem.y = 50;    // same as "top"
->// speedX and speedY aren't needed for now
->```
+> ```js
+> var gameItem = {};
+> gameItem.$element = $("#gameItem");
+> gameItem.x = 100; // same as "left"
+> gameItem.y = 50; // same as "top"
+> // speedX and speedY aren't needed for now
+> ```
 >
->Assuming that you are dealing with two `gameItem` objects, `objA` and `objB`, the `doCollide` function's pseudocode would look like this:
+> Assuming that you are dealing with two `gameItem` objects, `objA` and `objB`, the `doCollide` function's pseudocode would look like this:
 >
->```js
->IF the left side of objA is left of the right side of objB AND
+> ```js
+> IF the left side of objA is left of the right side of objB AND
 >  the right side of objA is right of the left side of objB AND
 >  the top side of objA is above the bottom side of objB AND
->  the bottom side of objA is below the top side of objB: 
+>  the bottom side of objA is below the top side of objB:
 >  return true
->ELSE:
+> ELSE:
 >  return false
->```
-></details>
+> ```
+>
+> </details>
 
 </details>
 
