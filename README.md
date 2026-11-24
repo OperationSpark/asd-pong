@@ -2,7 +2,7 @@
 
 Pong is a game played by two players who each control a paddle placed at opposite sides of the screen. A ball is hit back and forth between the two paddles, and the top and bottom walls, until the ball goes past one player's paddle. The player who misses the ball loses the point. The game ends when one player reaches 11 points (you may change this number as long as it is greater than 3).
 
-<img src="img/pong.gif">
+<img src="https://raw.githubusercontent.com/OperationSpark/images/refs/heads/master/hs-curriculum/asd-projects/pong/pong.gif">
 
 **Table of Contents**
 
